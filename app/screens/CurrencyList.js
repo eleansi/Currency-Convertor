@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable linebreak-style */
 /* eslint-disable arrow-body-style */
 /* eslint-disable linebreak-style */
 /* eslint-disable padded-blocks */
@@ -22,6 +24,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable eol-last */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, StatusBar, Text, FlatList } from 'react-native';
 import { ListItem, Separator } from '../components/List';
 import currencies from '../data/currencies';
@@ -29,12 +32,17 @@ import currencies from '../data/currencies';
 const TEMP_CURRENT_CURRENCY = 'CAD';
 
 class CurrencyList extends Component {
+    static propTypes = {
+        navigation: PropTypes.object,
+    };
+
     renderSeparator = () => {
         return (<Separator />);
     }
 
     handlePress = () => {
         console.log("row pressed");
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -46,7 +54,8 @@ class CurrencyList extends Component {
                     renderItem={({ item }) => 
                         <ListItem 
                             text={item}
-                            selected={item === TEMP_CURRENT_CURRENCY}    
+                            selected={item === TEMP_CURRENT_CURRENCY} 
+                            onPress={this.handlePress}   
                         />}
                     keyExtractor={item => item}
                     ItemSeparatorComponent={this.renderSeparator}
